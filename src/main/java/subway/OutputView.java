@@ -20,6 +20,7 @@ public class OutputView {
 	}
 
 	public void printSearchOption() {
+		printBlankLine();
 		System.out.println(SEARCH_TITLE);
 		for (SearchOption option : SearchOption.values()) {
 			System.out.printf(OPTION_FORMAT, option.getCode(), option.getValue());
@@ -27,18 +28,26 @@ public class OutputView {
 	}
 
 	public void askFunction() {
+		printBlankLine();
 		System.out.println(QUESTION_FUNCTION);
 	}
 
 	public void askDeparture() {
+		printBlankLine();
 		System.out.println(QUESTION_DEPARTURE);
 	}
 
 	public void askDestination() {
+		printBlankLine();
 		System.out.println(QUESTION_DESTINATION);
 	}
 
 	public void printError(Exception exception) {
+		printBlankLine();
 		System.out.printf(ERROR_FORMAT, exception.getMessage());
+	}
+
+	private void printBlankLine() {
+		System.out.println();
 	}
 }

@@ -1,5 +1,7 @@
 package subway;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Program {
@@ -22,51 +24,51 @@ public class Program {
 	}
 
 	public void run() {
-		chooseFunction();
-		if (!running) {
+		FunctionOption option = chooseFunctionOption();
+		if (option == FunctionOption.QUIT) {
+			running = false;
 			return;
 		}
-		collectDatasForSearch();
+		if (option == FunctionOption.SEARCH) {
+			search();
+		}
 	}
 
 	public boolean isRunning() {
 		return running;
 	}
 
-	private void chooseFunction() {
+	private FunctionOption chooseFunctionOption() {
 		outputView.printMain();
-		if (askFunction().equals(FunctionOption.QUIT.getCode())) {
-			running = false;
-		}
+		String optionCode = askFunction();
+		return Arrays.stream(FunctionOption.values())
+			.filter(option -> Objects.equals(option.getCode(), optionCode))
+			.findFirst()
+			.get();
 	}
 
-	private void collectDatasForSearch() {
-		setSearchOption(chooseSearchOption());
+	private void search() {
+		SearchOption option = chooseSearchOption();
+		if (option == SearchOption.GO_BACK) {
+			return;
+		}
 		String departure = askDeparture();
 		String destination = askDestination();
 		try {
 			inputValidator.validateTwoStation(departure, destination);
 		} catch (IllegalArgumentException e) {
 			outputView.printError(e);
-			collectDatasForSearch();
+			search();
 		}
 	}
 
-	private void setSearchOption(String chosenOptionCode) {
-		if (chosenOptionCode.equals(SearchOption.GO_BACK.getCode())) {
-			return;
-		}
-		if (chosenOptionCode.equals(SearchOption.DISTANCE.getCode())) {
-			//TODO: 최단거리 경로 탐색
-		}
-		if (chosenOptionCode.equals(SearchOption.TIME.getCode())) {
-			//TODO: 최단시간 경로 탐색
-		}
-	}
-
-	private String chooseSearchOption() {
+	private SearchOption chooseSearchOption() {
 		outputView.printSearchOption();
-		return askSearchOption();
+		String optionCode =  askSearchOption();
+		return Arrays.stream(SearchOption.values())
+			.filter(option -> Objects.equals(option.getCode(),optionCode))
+			.findFirst()
+			.get();
 	}
 
 	private String askFunction() {
