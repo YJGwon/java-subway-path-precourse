@@ -76,6 +76,7 @@ public class Program {
 	private void search(String departure, String destination, SearchOption option) {
 		List<String> shortestPath = pathManager.searchPath(departure, destination, option);
 		pathManager.getTotalDistance(shortestPath);
+		pathManager.getTotalTime(shortestPath);
 	}
 
 	private String askFunction() {

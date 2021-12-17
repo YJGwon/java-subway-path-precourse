@@ -27,10 +27,18 @@ public class PathManager {
 	}
 
 	public int getTotalDistance(List<String> path) {
+		return getTotalWeight(path, distanceGraph);
+	}
+
+	public int getTotalTime(List<String> path) {
+		return getTotalWeight(path, timeGraph);
+	}
+
+	private int getTotalWeight(List<String> path, WeightedMultigraph graph) {
 		int totalDistance = 0;
 		for (int i = 1; i < path.size(); i++) {
 			totalDistance
-				+= distanceGraph.getEdgeWeight(distanceGraph.getEdge(path.get(i - 1), path.get(i)));
+				+= graph.getEdgeWeight(graph.getEdge(path.get(i - 1), path.get(i)));
 		}
 		return totalDistance;
 	}
