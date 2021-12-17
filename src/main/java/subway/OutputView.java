@@ -6,6 +6,8 @@ public class OutputView {
 	private static final String SEARCH_TITLE = "## 경로 기준";
 
 	private static final String QUESTION_FUNCTION = "## 원하는 기능을 선택하세요.";
+	private static final String QUESTION_DEPARTURE = "## 출발역을 입력하세요.";
+	private static final String QUESTION_DESTINATION = "## 도착역을 입력하세요.";
 
 	private static final String OPTION_FORMAT = "%s. %s%n";
 	private static final String ERROR_FORMAT = "[ERROR] %s%n";
@@ -26,6 +28,14 @@ public class OutputView {
 
 	public void askFunction() {
 		System.out.println(QUESTION_FUNCTION);
+	}
+
+	public void askDeparture() {
+		System.out.println(QUESTION_DEPARTURE);
+	}
+
+	public void askDestination() {
+		System.out.println(QUESTION_DESTINATION);
 	}
 
 	public void printError(Exception exception) {

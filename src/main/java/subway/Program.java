@@ -36,6 +36,7 @@ public class Program {
 		if (chosenOptionCode.equals(SearchOption.GO_BACK.getCode())) {
 			return;
 		}
+		askStation();
 		if (chosenOptionCode.equals(SearchOption.DISTANCE.getCode())) {
 			//TODO: 최단거리 경로 탐색
 		}
@@ -67,5 +68,12 @@ public class Program {
 			outputView.printError(e);
 			return askSearchOption();
 		}
+	}
+
+	private void askStation() {
+		outputView.askDeparture();
+		String departure = scanner.nextLine();
+		outputView.askDestination();
+		String destination = scanner.nextLine();
 	}
 }
