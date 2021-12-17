@@ -3,6 +3,9 @@ package subway;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.WeightedMultigraph;
+
 import subway.domain.Line;
 import subway.domain.LineRepository;
 import subway.domain.Station;
@@ -21,8 +24,15 @@ public class DataInitializer {
 	private static final String LINE_THREE = "3호선";
 	private static final String LINE_SINBOONDANG = "신분당선";
 
+	private static final int KM_ONE = 1;
+	private static final int KM_TWO = 2;
+	private static final int KM_THREE = 3;
+	private static final int KM_SIX = 6;
+	private static final int KM_TEN = 10;
+
 	private static final List<String> stationNames = Arrays.asList(
-		STATION_GYODAE, STATION_GANGNAM, STATION_YUKSAM, STATION_NAMBOO, STATION_YANGJAE, STATION_YANGJAESOOP, STATION_MAEBONG
+		STATION_GYODAE, STATION_GANGNAM, STATION_YUKSAM,
+		STATION_NAMBOO, STATION_YANGJAE, STATION_YANGJAESOOP, STATION_MAEBONG
 	);
 	private static final List<String> lineNames = Arrays.asList(
 		LINE_TWO, LINE_THREE, LINE_SINBOONDANG
@@ -32,6 +42,7 @@ public class DataInitializer {
 		initStations();
 		initLines();
 		initStationsInLines();
+		initDistanceGraph();
 	}
 
 	private static void initStations() {
@@ -50,6 +61,26 @@ public class DataInitializer {
 		initStationsInLine2();
 		initStationsInLine3();
 		initStationInLineSinBoonDang();
+	}
+
+	private static void initDistanceGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = makeDefaultGraph();
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), KM_THREE);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), KM_SIX);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), KM_ONE);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), KM_TEN);
+	}
+
+	private static WeightedMultigraph<String, DefaultWeightedEdge> makeDefaultGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> defaltGraph = new WeightedMultigraph(
+			DefaultWeightedEdge.class);
+		for (String stationName : stationNames) {
+			defaltGraph.addVertex(stationName);
+		}
+		return defaltGraph;
 	}
 
 	private static void initStationsInLine2() {
