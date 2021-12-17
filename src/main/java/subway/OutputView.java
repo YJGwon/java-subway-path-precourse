@@ -4,9 +4,6 @@ public class OutputView {
 	private static final String MAIN_TITLE = "## 메인화면";
 
 	private static final String SEARCH_TITLE = "## 경로 기준";
-	private static final String SEARCH_OPTION_DISTANCE = "1. 최단 거리";
-	private static final String SEARCH_OPTION_TIME = "2. 최소 시간";
-	private static final String SEARCH_OPTION_GO_BACK = "B. 돌아가기";
 
 	private static final String QUESTION_FUNCTION = "## 원하는 기능을 선택하세요.";
 
@@ -22,9 +19,9 @@ public class OutputView {
 
 	public void printSearchOption() {
 		System.out.println(SEARCH_TITLE);
-		System.out.println(SEARCH_OPTION_DISTANCE);
-		System.out.println(SEARCH_OPTION_TIME);
-		System.out.println(SEARCH_OPTION_GO_BACK);
+		for (SearchOption option : SearchOption.values()) {
+			System.out.printf(OPTION_FORMAT, option.getCode(), option.getValue());
+		}
 	}
 
 	public void askFunction() {

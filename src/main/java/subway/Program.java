@@ -19,8 +19,8 @@ public class Program {
 			return;
 		}
 		outputView.printSearchOption();
+		chooseSearchOption();
 	}
-
 
 	private String chooseFunction() {
 		outputView.askFunction();
@@ -30,5 +30,10 @@ public class Program {
 			outputView.printError(e);
 			return chooseFunction();
 		}
+	}
+
+	private String chooseSearchOption() {
+		outputView.askFunction();
+		return scanner.nextLine();
 	}
 }
