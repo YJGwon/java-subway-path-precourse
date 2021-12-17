@@ -23,4 +23,11 @@ public class LineRepository {
 	public static void deleteAll() {
 		lines.clear();
 	}
+
+	public static Line get(String name) {
+		return lines.stream()
+			.filter(line -> Objects.equals(line.getName(), name))
+			.findFirst()
+			.get();
+	}
 }
