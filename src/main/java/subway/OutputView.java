@@ -1,9 +1,11 @@
 package subway;
 
-public class OutputView {
-	private static final String MAIN_TITLE = "## 메인화면";
+import java.util.List;
 
-	private static final String SEARCH_TITLE = "## 경로 기준";
+public class OutputView {
+	private static final String TITLE_MAIN = "## 메인화면";
+	private static final String TITLE_SEARCH = "## 경로 기준";
+	private static final String TITLE_RESULT = "## 조회 결과";
 
 	private static final String QUESTION_FUNCTION = "## 원하는 기능을 선택하세요.";
 	private static final String QUESTION_DEPARTURE = "## 출발역을 입력하세요.";
@@ -11,9 +13,14 @@ public class OutputView {
 
 	private static final String OPTION_FORMAT = "%s. %s%n";
 	private static final String ERROR_FORMAT = "[ERROR] %s%n";
+	private static final String INFO_FORMAT = "[INFO] %s%n";
+	private static final String TOTAL_DISTANCE_FORMAT = "[INFO] 총 거리: %dkm%n";
+	private static final String TOTAL_TIME_FORMAT = "[INFO] 총 소요 시간: %d분%n";
+
+	private static final String BORDER_LINE = "--";
 
 	public void printMain() {
-		System.out.println(MAIN_TITLE);
+		System.out.println(TITLE_MAIN);
 		for (FunctionOption option : FunctionOption.values()) {
 			System.out.printf(OPTION_FORMAT, option.getCode(), option.getValue());
 		}
@@ -21,10 +28,18 @@ public class OutputView {
 
 	public void printSearchOption() {
 		printBlankLine();
-		System.out.println(SEARCH_TITLE);
+		System.out.println(TITLE_SEARCH);
 		for (SearchOption option : SearchOption.values()) {
 			System.out.printf(OPTION_FORMAT, option.getCode(), option.getValue());
 		}
+	}
+
+	public void printResult(List<String> path, int totalDistance, int totalTime) {
+		printBlankLine();
+		System.out.println(TITLE_RESULT);
+		printTotalWeights(totalDistance, totalTime);
+		printPath(path);
+		printBlankLine();
 	}
 
 	public void askFunction() {
@@ -49,5 +64,22 @@ public class OutputView {
 
 	private void printBlankLine() {
 		System.out.println();
+	}
+
+	private void printBorderLine() {
+		System.out.printf(INFO_FORMAT, BORDER_LINE);
+	}
+
+	private void printTotalWeights(int totalDistance, int totalTime) {
+		printBorderLine();
+		System.out.printf(TOTAL_DISTANCE_FORMAT, totalDistance);
+		System.out.printf(TOTAL_TIME_FORMAT, totalTime);
+	}
+
+	private void printPath(List<String> path) {
+		printBorderLine();
+		for (String stationName : path) {
+			System.out.printf(INFO_FORMAT, stationName);
+		}
 	}
 }

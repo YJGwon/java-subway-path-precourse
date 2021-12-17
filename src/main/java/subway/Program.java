@@ -19,7 +19,7 @@ public class Program {
 	}
 
 	public void initialiseData() {
-		DataInitializer.init();
+		DataInitializer.initLinesAndStations();
 		this.pathManager = new PathManager(
 			DataInitializer.initDistanceGraph(), DataInitializer.initTimeGraph());
 	}
@@ -68,15 +68,15 @@ public class Program {
 		outputView.printSearchOption();
 		String optionCode =  askSearchOption();
 		return Arrays.stream(SearchOption.values())
-			.filter(option -> Objects.equals(option.getCode(),optionCode))
+			.filter(option -> Objects.equals(option.getCode(), optionCode))
 			.findFirst()
 			.get();
 	}
 
 	private void search(String departure, String destination, SearchOption option) {
 		List<String> shortestPath = pathManager.searchPath(departure, destination, option);
-		pathManager.getTotalDistance(shortestPath);
-		pathManager.getTotalTime(shortestPath);
+		outputView.printResult(
+			shortestPath, pathManager.getTotalDistance(shortestPath), pathManager.getTotalTime(shortestPath));
 	}
 
 	private String askFunction() {

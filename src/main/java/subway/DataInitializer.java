@@ -44,7 +44,7 @@ public class DataInitializer {
 		LINE_TWO, LINE_THREE, LINE_SINBOONDANG
 	);
 
-	public static void init() {
+	public static void initLinesAndStations() {
 		initStations();
 		initLines();
 		initStationsInLines();
