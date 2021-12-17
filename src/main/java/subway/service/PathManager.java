@@ -1,4 +1,4 @@
-package subway;
+package subway.service;
 
 import java.util.List;
 

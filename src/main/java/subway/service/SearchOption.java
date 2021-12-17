@@ -1,4 +1,4 @@
-package subway;
+package subway.service;
 
 public enum SearchOption {
 	DISTANCE("1", "최단 거리"),

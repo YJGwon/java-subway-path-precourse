@@ -1,4 +1,4 @@
-package subway;
+package subway.service;
 
 public enum FunctionOption {
 	SEARCH("1", "경로 조회"),

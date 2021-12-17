@@ -1,6 +1,9 @@
-package subway;
+package subway.view;
 
 import java.util.List;
+
+import subway.service.FunctionOption;
+import subway.service.SearchOption;
 
 public class OutputView {
 	private static final String TITLE_MAIN = "## 메인화면";
