@@ -15,6 +15,7 @@ public class Program {
 		DataInitializer.init();
 		outputView.printMain();
 		chooseFunction();
+		outputView.printSearchOption();
 	}
 
 	private String chooseFunction() {
