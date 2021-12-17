@@ -30,6 +30,12 @@ public class DataInitializer {
 	private static final int KM_SIX = 6;
 	private static final int KM_TEN = 10;
 
+	private static final int MINUTE_ONE = 1;
+	private static final int MINUTE_TWO = 2;
+	private static final int MINUTE_THREE = 3;
+	private static final int MINUTE_FIVE = 5;
+	private static final int MINUTE_EIGHT = 8;
+
 	private static final List<String> stationNames = Arrays.asList(
 		STATION_GYODAE, STATION_GANGNAM, STATION_YUKSAM,
 		STATION_NAMBOO, STATION_YANGJAE, STATION_YANGJAESOOP, STATION_MAEBONG
@@ -43,6 +49,7 @@ public class DataInitializer {
 		initLines();
 		initStationsInLines();
 		initDistanceGraph();
+		initTimeGraph();
 	}
 
 	private static void initStations() {
@@ -74,13 +81,15 @@ public class DataInitializer {
 		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), KM_TEN);
 	}
 
-	private static WeightedMultigraph<String, DefaultWeightedEdge> makeDefaultGraph() {
-		WeightedMultigraph<String, DefaultWeightedEdge> defaltGraph = new WeightedMultigraph(
-			DefaultWeightedEdge.class);
-		for (String stationName : stationNames) {
-			defaltGraph.addVertex(stationName);
-		}
-		return defaltGraph;
+	private static void initTimeGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = makeDefaultGraph();
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), MINUTE_THREE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), MINUTE_THREE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), MINUTE_TWO);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), MINUTE_FIVE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), MINUTE_ONE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), MINUTE_EIGHT);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), MINUTE_THREE);
 	}
 
 	private static void initStationsInLine2() {
@@ -103,5 +112,14 @@ public class DataInitializer {
 		lineSinBoonDang.addStation(StationRepository.get(STATION_GANGNAM));
 		lineSinBoonDang.addStation(StationRepository.get(STATION_YANGJAE));
 		lineSinBoonDang.addStation(StationRepository.get(STATION_YANGJAESOOP));
+	}
+
+	private static WeightedMultigraph<String, DefaultWeightedEdge> makeDefaultGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> defaltGraph = new WeightedMultigraph(
+			DefaultWeightedEdge.class);
+		for (String stationName : stationNames) {
+			defaltGraph.addVertex(stationName);
+		}
+		return defaltGraph;
 	}
 }
