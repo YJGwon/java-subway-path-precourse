@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Program {
 	private final OutputView outputView = new OutputView();
+	private final InputValidator inputValidator = new InputValidator();
 	private final Scanner scanner;
 
 	public Program(Scanner scanner) {
@@ -13,7 +14,16 @@ public class Program {
 	public void run() {
 		DataInitializer.init();
 		outputView.printMain();
+		chooseFunction();
+	}
+
+	private String chooseFunction() {
 		outputView.askFunction();
-		scanner.nextLine();
+		try {
+			return inputValidator.validateFunction(scanner.nextLine());
+		} catch (IllegalArgumentException e) {
+			outputView.printError(e);
+			return chooseFunction();
+		}
 	}
 }

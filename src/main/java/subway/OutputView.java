@@ -7,6 +7,7 @@ public class OutputView {
 
 	private static final String QUESTION_FUNCTION = "## 원하는 기능을 선택하세요.";
 
+	private static final String ERROR_FORMAT = "[ERROR] %s%n";
 	public void printMain() {
 		System.out.println(MAIN_TITLE);
 		System.out.println(MAIN_OPTION_SEARCH);
@@ -15,5 +16,9 @@ public class OutputView {
 
 	public void askFunction() {
 		System.out.println(QUESTION_FUNCTION);
+	}
+
+	public void printError(Exception exception) {
+		System.out.printf(ERROR_FORMAT, exception.getMessage());
 	}
 }
