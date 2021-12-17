@@ -14,9 +14,13 @@ public class Program {
 	public void run() {
 		DataInitializer.init();
 		outputView.printMain();
-		chooseFunction();
+		String chosenFunction = chooseFunction();
+		if (chosenFunction.equals(FunctionOption.QUIT.getCode())) {
+			return;
+		}
 		outputView.printSearchOption();
 	}
+
 
 	private String chooseFunction() {
 		outputView.askFunction();

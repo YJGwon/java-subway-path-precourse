@@ -1,15 +1,15 @@
 package subway;
 
-public class InputValidator {
-	private static final String FUNCTION_OPTION_SEARCH = "1";
-	private static final String FUNCTION_OPTION_QUIT = "Q";
+import java.util.Arrays;
 
-	private static final String ERROR_MESSAGE_NO_SUCH_FUNCTION = "1, Q 중 하나를 입력하세요.";
+public class InputValidator {
+	private static final String ERROR_MESSAGE_NO_SUCH_FUNCTION = "주어진 기능 내에서 선택해주세요(기호로 선택).";
 
 	public String validateFunction(String input) {
-		if (input.equals(FUNCTION_OPTION_SEARCH) || input.equals(FUNCTION_OPTION_QUIT)) {
-			return input;
+		if (Arrays.stream(FunctionOption.values())
+			.noneMatch(option -> input.equals(option.getCode()))) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_NO_SUCH_FUNCTION);
 		}
-		throw new IllegalArgumentException(ERROR_MESSAGE_NO_SUCH_FUNCTION);
+		return input;
 	}
 }

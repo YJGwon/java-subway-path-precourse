@@ -2,8 +2,6 @@ package subway;
 
 public class OutputView {
 	private static final String MAIN_TITLE = "## 메인화면";
-	private static final String MAIN_OPTION_SEARCH = "1. 경로 조회";
-	private static final String MAIN_OPTION_QUIT = "Q. 종료";
 
 	private static final String SEARCH_TITLE = "## 경로 기준";
 	private static final String SEARCH_OPTION_DISTANCE = "1. 최단 거리";
@@ -12,12 +10,14 @@ public class OutputView {
 
 	private static final String QUESTION_FUNCTION = "## 원하는 기능을 선택하세요.";
 
+	private static final String OPTION_FORMAT = "%s. %s%n";
 	private static final String ERROR_FORMAT = "[ERROR] %s%n";
 
 	public void printMain() {
 		System.out.println(MAIN_TITLE);
-		System.out.println(MAIN_OPTION_SEARCH);
-		System.out.println(MAIN_OPTION_QUIT);
+		for (FunctionOption option : FunctionOption.values()) {
+			System.out.printf(OPTION_FORMAT, option.getCode(), option.getValue());
+		}
 	}
 
 	public void printSearchOption() {
