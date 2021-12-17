@@ -12,4 +12,12 @@ public class InputValidator {
 		}
 		return input;
 	}
+
+	public String validateSearchOption(String input) {
+		if (Arrays.stream(SearchOption.values())
+			.noneMatch(option -> input.equals(option.getCode()))) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_NO_SUCH_FUNCTION);
+		}
+		return input;
+	}
 }

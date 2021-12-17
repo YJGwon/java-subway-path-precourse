@@ -9,8 +9,8 @@ public enum FunctionOption {
 		this.value = value;
 	}
 
-	private String code;
-	private String value;
+	private final String code;
+	private final String value;
 
 	public String getCode() {
 		return code;

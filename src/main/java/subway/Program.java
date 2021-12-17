@@ -34,6 +34,11 @@ public class Program {
 
 	private String chooseSearchOption() {
 		outputView.askFunction();
-		return scanner.nextLine();
+		try {
+			return inputValidator.validateSearchOption(scanner.nextLine());
+		} catch (IllegalArgumentException e) {
+			outputView.printError(e);
+			return chooseSearchOption();
+		}
 	}
 }
