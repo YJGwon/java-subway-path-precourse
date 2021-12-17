@@ -48,8 +48,30 @@ public class DataInitializer {
 		initStations();
 		initLines();
 		initStationsInLines();
-		initDistanceGraph();
-		initTimeGraph();
+	}
+
+	public static WeightedMultigraph<String, DefaultWeightedEdge> initDistanceGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = makeDefaultGraph();
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), KM_THREE);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), KM_SIX);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), KM_ONE);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), KM_TWO);
+		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), KM_TEN);
+		return distanceGraph;
+	}
+
+	public static WeightedMultigraph<String, DefaultWeightedEdge> initTimeGraph() {
+		WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = makeDefaultGraph();
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), MINUTE_THREE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), MINUTE_THREE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), MINUTE_TWO);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), MINUTE_FIVE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), MINUTE_ONE);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), MINUTE_EIGHT);
+		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), MINUTE_THREE);
+		return timeGraph;
 	}
 
 	private static void initStations() {
@@ -68,28 +90,6 @@ public class DataInitializer {
 		initStationsInLine2();
 		initStationsInLine3();
 		initStationInLineSinBoonDang();
-	}
-
-	private static void initDistanceGraph() {
-		WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = makeDefaultGraph();
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), KM_TWO);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), KM_TWO);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), KM_THREE);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), KM_SIX);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), KM_ONE);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), KM_TWO);
-		distanceGraph.setEdgeWeight(distanceGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), KM_TEN);
-	}
-
-	private static void initTimeGraph() {
-		WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = makeDefaultGraph();
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_GANGNAM), MINUTE_THREE);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YUKSAM), MINUTE_THREE);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GYODAE, STATION_NAMBOO), MINUTE_TWO);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_NAMBOO, STATION_YANGJAE), MINUTE_FIVE);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_MAEBONG), MINUTE_ONE);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_GANGNAM, STATION_YANGJAE), MINUTE_EIGHT);
-		timeGraph.setEdgeWeight(timeGraph.addEdge(STATION_YANGJAE, STATION_YANGJAESOOP), MINUTE_THREE);
 	}
 
 	private static void initStationsInLine2() {

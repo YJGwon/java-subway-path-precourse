@@ -30,4 +30,9 @@ public class StationRepository {
 			.findFirst()
 			.get();
 	}
+
+	public static boolean hasStation(String name) {
+		return stations.stream()
+			.anyMatch(station -> Objects.equals(station.getName(), name));
+	}
 }

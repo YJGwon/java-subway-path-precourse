@@ -7,17 +7,26 @@ public class Program {
 	private final InputValidator inputValidator = new InputValidator();
 	private final Scanner scanner;
 
+	private Searcher searcher;
+
 	private boolean running = true;
 
 	public Program(Scanner scanner) {
 		this.scanner = scanner;
 	}
 
+	public void initialiseData() {
+		DataInitializer.init();
+		this.searcher = new Searcher(
+			DataInitializer.initDistanceGraph(), DataInitializer.initTimeGraph());
+	}
+
 	public void run() {
 		chooseFunction();
-		if (running) {
-			search();
+		if (!running) {
+			return;
 		}
+		collectDatasForSearch();
 	}
 
 	public boolean isRunning() {
@@ -31,12 +40,22 @@ public class Program {
 		}
 	}
 
-	private void search() {
-		String chosenOptionCode = chooseSearchOption();
+	private void collectDatasForSearch() {
+		setSearchOption(chooseSearchOption());
+		String departure = askDeparture();
+		String destination = askDestination();
+		try {
+			inputValidator.validateTwoStation(departure, destination);
+		} catch (IllegalArgumentException e) {
+			outputView.printError(e);
+			collectDatasForSearch();
+		}
+	}
+
+	private void setSearchOption(String chosenOptionCode) {
 		if (chosenOptionCode.equals(SearchOption.GO_BACK.getCode())) {
 			return;
 		}
-		askStation();
 		if (chosenOptionCode.equals(SearchOption.DISTANCE.getCode())) {
 			//TODO: 최단거리 경로 탐색
 		}
@@ -52,8 +71,10 @@ public class Program {
 
 	private String askFunction() {
 		outputView.askFunction();
+		String input = scanner.nextLine();
 		try {
-			return inputValidator.validateFunction(scanner.nextLine());
+			inputValidator.validateFunction(input);
+			return input;
 		} catch (IllegalArgumentException e) {
 			outputView.printError(e);
 			return askFunction();
@@ -62,18 +83,37 @@ public class Program {
 
 	private String askSearchOption() {
 		outputView.askFunction();
+		String input = scanner.nextLine();
 		try {
-			return inputValidator.validateSearchOption(scanner.nextLine());
+			inputValidator.validateSearchOption(input);
+			return input;
 		} catch (IllegalArgumentException e) {
 			outputView.printError(e);
 			return askSearchOption();
 		}
 	}
 
-	private void askStation() {
+	private String askDeparture() {
 		outputView.askDeparture();
-		String departure = scanner.nextLine();
+		String input = scanner.nextLine();
+		try {
+			inputValidator.validateStationInput(input);
+			return input;
+		} catch (IllegalArgumentException e) {
+			outputView.printError(e);
+			return askDeparture();
+		}
+	}
+
+	private String askDestination() {
 		outputView.askDestination();
-		String destination = scanner.nextLine();
+		String input = scanner.nextLine();
+		try {
+			inputValidator.validateStationInput(input);
+			return input;
+		} catch (IllegalArgumentException e) {
+			outputView.printError(e);
+			return askDestination();
+		}
 	}
 }
