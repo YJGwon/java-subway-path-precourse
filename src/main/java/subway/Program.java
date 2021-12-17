@@ -1,6 +1,7 @@
 package subway;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ public class Program {
 	private final InputValidator inputValidator = new InputValidator();
 	private final Scanner scanner;
 
-	private Searcher searcher;
+	private PathManager pathManager;
 
 	private boolean running = true;
 
@@ -19,7 +20,7 @@ public class Program {
 
 	public void initialiseData() {
 		DataInitializer.init();
-		this.searcher = new Searcher(
+		this.pathManager = new PathManager(
 			DataInitializer.initDistanceGraph(), DataInitializer.initTimeGraph());
 	}
 
@@ -30,7 +31,7 @@ public class Program {
 			return;
 		}
 		if (option == FunctionOption.SEARCH) {
-			search();
+			startSearch();
 		}
 	}
 
@@ -47,7 +48,7 @@ public class Program {
 			.get();
 	}
 
-	private void search() {
+	private void startSearch() {
 		SearchOption option = chooseSearchOption();
 		if (option == SearchOption.GO_BACK) {
 			return;
@@ -56,10 +57,10 @@ public class Program {
 		String destination = askDestination();
 		try {
 			inputValidator.validateTwoStation(departure, destination);
-			searcher.searchPath(departure, destination, option);
+			search(departure, destination, option);
 		} catch (IllegalArgumentException e) {
 			outputView.printError(e);
-			search();
+			startSearch();
 		}
 	}
 
@@ -70,6 +71,11 @@ public class Program {
 			.filter(option -> Objects.equals(option.getCode(),optionCode))
 			.findFirst()
 			.get();
+	}
+
+	private void search(String departure, String destination, SearchOption option) {
+		List<String> shortestPath = pathManager.searchPath(departure, destination, option);
+		pathManager.getTotalDistance(shortestPath);
 	}
 
 	private String askFunction() {

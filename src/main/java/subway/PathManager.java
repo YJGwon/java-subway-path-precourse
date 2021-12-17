@@ -6,13 +6,13 @@ import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 
-public class Searcher {
+public class PathManager {
 	private static final String ERROR_MESSAGE_NO_PATH = "경로가 존재하지 않습니다.";
 
 	private final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph;
 	private final WeightedMultigraph<String, DefaultWeightedEdge> timeGraph;
 
-	public Searcher(
+	public PathManager(
 		WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph,
 		WeightedMultigraph<String, DefaultWeightedEdge> timeGraph) {
 		this.distanceGraph = distanceGraph;
@@ -24,6 +24,15 @@ public class Searcher {
 			return getShortestPath(departure, destination, new DijkstraShortestPath(distanceGraph));
 		}
 		return getShortestPath(departure, destination, new DijkstraShortestPath(timeGraph));
+	}
+
+	public int getTotalDistance(List<String> path) {
+		int totalDistance = 0;
+		for (int i = 1; i < path.size(); i++) {
+			totalDistance
+				+= distanceGraph.getEdgeWeight(distanceGraph.getEdge(path.get(i - 1), path.get(i)));
+		}
+		return totalDistance;
 	}
 
 	private List<String> getShortestPath(
