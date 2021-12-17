@@ -7,8 +7,10 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 
 public class Searcher {
-	private WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph;
-	private WeightedMultigraph<String, DefaultWeightedEdge> timeGraph;
+	private static final String ERROR_MESSAGE_NO_PATH = "경로가 존재하지 않습니다.";
+
+	private final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph;
+	private final WeightedMultigraph<String, DefaultWeightedEdge> timeGraph;
 
 	public Searcher(
 		WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph,
@@ -26,6 +28,10 @@ public class Searcher {
 
 	private List<String> getShortestPath(
 		String departure, String destination, DijkstraShortestPath dijkstraShortestPath) {
-		return dijkstraShortestPath.getPath(departure, destination).getVertexList();
+		try {
+			return dijkstraShortestPath.getPath(departure, destination).getVertexList();
+		} catch (NullPointerException e) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_NO_PATH);
+		}
 	}
 }
