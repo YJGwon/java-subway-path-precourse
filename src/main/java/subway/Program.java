@@ -54,6 +54,7 @@ public class Program {
 		}
 		String departure = askDeparture();
 		String destination = askDestination();
+		searcher.searchPath(departure, destination, option);
 		try {
 			inputValidator.validateTwoStation(departure, destination);
 		} catch (IllegalArgumentException e) {
